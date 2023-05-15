@@ -1,19 +1,22 @@
 <script>
-  let savedNames = [];
+  let savedNames = []; //Tässä array, johon tallennetut bändin nimet menevät.
 
   function updateNames() {
-    savedNames.push(generatedName);
-    savedNames = savedNames;
-  }
+    //Funktio, joka pushaa sen hetkisen esillä olevan
+    savedNames.push(generatedName); //bändin nimen savedNames -muuttujaan.
+    savedNames = savedNames; //Tässä varmistetaan funktiolle, että savedNames
+  } //-muuttuja saa todellakin oikean arvon.
 
-  export let words = 1;
+  export let words = 1; //words -muuttuja määrittää sanojen määrän bändin
+  //nimessä ja on tällä hetkellä vakiona 1.
 
-  let generatedName = '';
+  let generatedName = ''; //Tähän muuttujaan tuleekin generoitu nimi
 
   const oneName = [
-    'Bermuda',
-    'Valiant',
-    'Heretics',
+    //Tämä muuttuja sisältää arrayn, jossa on omia
+    'Bermuda', //ns. yhden sanan stock-nimiä, jotka sovellus
+    'Valiant', //näyttää vain silloin, kun valintana on 1-sanainen
+    'Heretics', //bändin nimi
     'Saviour',
     'Kemmler',
     'Eruption',
@@ -48,8 +51,9 @@
     'Dramator',
   ];
   const first = [
-    'Dormant',
-    'Of',
+    //first -muuttuja sisältää arrayn sanoja, jotka
+    'Dormant', //funktio ottaa huomioon siinä kohtaa, kun valintana
+    'Of', //on useampi kuin 1 sanan mittainen nimi.
     'Primeval',
     'Altered',
     'Alter',
@@ -87,8 +91,9 @@
   ];
 
   const second = [
-    'Of',
-    'For',
+    //Tämä muuttuja sisältää artikkeleita ja
+    'Of', //konjunktioita. Ne otetaan huomioon vasta, kun
+    'For', //bändin nimi on 3 sanaa pitkä.
     'By',
     'From',
     'Or',
@@ -105,8 +110,9 @@
   ];
 
   const third = [
-    'Prevails',
-    'Prevail',
+    //Tämä muuttuja sisältää ns. lopetus-sanoja,
+    'Prevails', //jotka ovat käytössä, kun bändin nimen halutaan olevan
+    'Prevail', //pidempi kuin 1 sana.
     'Bachelor',
     'Romulus',
     'Vindicta',
@@ -152,18 +158,20 @@
   ];
 
   function generateRandomName() {
-    const randomIndexOneName = Math.floor(Math.random() * oneName.length);
-    const randomIndexFirst = Math.floor(Math.random() * first.length);
-    const randomIndexSecond = Math.floor(Math.random() * second.length);
+    const randomIndexOneName = Math.floor(Math.random() * oneName.length); //Nyt pääsemme funktioon, joka ensimmäisenä hakee jokaisesta
+    const randomIndexFirst = Math.floor(Math.random() * first.length); //sanoja sisältävästä arraysta math.floorin avulla sattumanvaraisen
+    const randomIndexSecond = Math.floor(Math.random() * second.length); //sanan ja tekee siitä randomIndex -muuttujan arvon.
     const randomIndexThird = Math.floor(Math.random() * third.length);
 
     if (words === 1) {
-      generatedName = oneName[randomIndexOneName];
-    }
+      generatedName = oneName[randomIndexOneName]; //Kun words-muuttujan arvo on vain 1, käytämme if-lauseketta, joka
+    } //hakee generatedName arvoksi oneName-muuttujan indeksin randomIndex-muuttujan arvolla.
     if (words === 2) {
-      generatedName = first[randomIndexFirst] + ` ` + third[randomIndexThird];
+      //Tässä kohtaa, kun words-muuttujan arvo on 2, hakee antaa funktio generatedName
+      generatedName = first[randomIndexFirst] + ` ` + third[randomIndexThird]; //arvoksi kaksi satunnaista indeksiä first ja third -muuttujista.
     }
     if (words === 3) {
+      //Kun words arvo on 3, hakee generatedName arvon first, second ja third-muuttujien satunnaisen indeksin arvon.
       generatedName =
         first[randomIndexFirst] +
         ` ` +
@@ -178,15 +186,21 @@
   <h2>Random Band Name Generator</h2>
   <p>Select length of your name:</p>
   <label>
+    <!--Tässä käytin range-input tyyppiä, jotta saan liukuvan palkin, jolla käyttäjä voi valita
+    sanojen määrän. Sanojen määrä on bindattu words-muuttujaan ja arvo näkyy liukurin yläpuolella.-->
     <p>{words} word(s)</p>
     <input type="range" bind:value={words} min="1" max="3" />
   </label>
   <p>Your band name is:</p>
+  <!--Tähän kohtaan tulee tämänhetkinen generoitu nimi-->
   <h2>{generatedName}</h2>
+  <!--Generate-button aktivoi funktion, joka generoi bändin nimen-->
   <button on:click={generateRandomName}>Generate</button>
+  <!--Save name -button aktivoi funktion, joka tallentaa generoidun bändin nimen alapuolelle listaan-->
   <button on:click={updateNames}>Save Name</button>
   <p>Saved names:</p>
   <ul>
+    <!--Seuraavaksi käytin #each lohkoa, jossa jokainen savedNames arrayn string on oma iteminsä ja ne näkyvät listana.-->
     {#each savedNames as item}
       <li>{item}</li>
     {/each}

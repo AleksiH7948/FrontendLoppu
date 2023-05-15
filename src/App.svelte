@@ -7,8 +7,10 @@
 <main>
   <h1>Hello {name}!</h1>
   <p>Press the button down below to generate a metal band name</p>
+  <!--Tässä kutsun itse generaattorin sisältävää svelte-sivua.-->
   <BandNameGenerator />
 </main>
+<!--Tässä taas kutsun footeria-->
 <Footer />
 
 <style>
